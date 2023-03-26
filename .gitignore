@@ -1,0 +1,12 @@
+*.png
+*.mp3
+
+tests.py
+
+urls.txt
+
+pyvenv.cfg
+Include
+Scripts
+share
+Lib
