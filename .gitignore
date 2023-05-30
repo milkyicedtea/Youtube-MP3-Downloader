@@ -7,6 +7,8 @@ tests.py
 
 urls.txt
 
+.idea
+
 pyvenv.cfg
 Include
 Scripts
