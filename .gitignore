@@ -1,5 +1,7 @@
-*.png
-*.mp3
+Covers
+Songs
+
+Songs.json
 
 tests.py
 
