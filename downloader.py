@@ -39,32 +39,44 @@ class Downloader:
         }
 
     def Download(self, url: list[str]):
-        print(url)
-        print(type(url))
+        # print(url)
+        # print(type(url))
         with yt_dlp.YoutubeDL(ytdl_format_options) as ydl:
-            if type(url) is not str:
-                for video in url:
-                    print(video)
-                    domains = ["youtube.com/", "music.youtube.com/", "youtu.be/"]
-                    for domain in domains:
-                        if video.startswith("https://" + domain):
-                            ydl.download(video)
-                        else:
-                            try:
-                                info = ydl.extract_info(f'ytsearch: {url}', download = False)['entries'][0]
-                                real_url = info['webpage_url']
-                                print(f'real_url {real_url}')
-                                ydl.download(real_url)
-                                break
-                            except:
-                                print('Something went wrong during the download of the file!')
-                                break
-            else:
-                # real_url = ydl.dl(name = url, info = ydl.extract_info(f'ytsearch:{url}', download = True))
-                info = ydl.extract_info(f'ytsearch: {url}', download = False)['entries'][0]
-                real_url = info['webpage_url']
-                print(f'real_url {real_url}')
-                ydl.download(real_url)
+            # if type(url) is not str:
+            for video in url:
+                print(video)
+                domains = ["youtube.com/", "music.youtube.com/", "youtu.be/"]
+                for domain in domains:
+                    print('domain {}'.format(domain))
+                    if video.startswith('https://' + domain[0]):
+                        print('downloading from list with link')
+                        ydl.download(video)
+                        in_domain = True
+                        break
+                    else:
+                        in_domain = False
+
+                if not in_domain:
+                    try:
+                        info = ydl.extract_info(f'ytsearch: {url}', download = False)['entries'][0]
+                        real_url = info['webpage_url']
+                        # print(f'real_url {real_url}')
+                        print('downloading from list with search')
+                        ydl.download(real_url)
+                        break
+                    except ...:
+                        print('Something went wrong during the download of the file!')
+                        break
+
+            # OLD IMPLEMENTATION: DOWNLOADS FROM STR INPUT USING SEARCH
+            # else:
+            #     # real_url = ydl.dl(name = url, info = ydl.extract_info(f'ytsearch:{url}', download = True))
+            #     info = ydl.extract_info(f'ytsearch: {url}', download = False)['entries'][0]
+            #     real_url = info['webpage_url']
+            #     # print(f'real_url {real_url}')
+            #     print('Downloading from str input')
+            #     ydl.download(real_url)
+
 
         for filename in self.directory.iterdir():
             if filename.suffix in [".webp", ".jpg", ".jpeg", ".png"]:
